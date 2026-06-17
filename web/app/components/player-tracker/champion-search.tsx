@@ -74,7 +74,8 @@ export default function ChampionSearch({ onSelect, side = "left" }: ChampionSear
   }, []);
 
   const handleSelect = async (result: ChampionSearchResult) => {
-    setQuery(result.name);
+    setQuery("");
+    setResults([]);
     setOpen(false);
     try {
       const detail = await getChampion(result.slug);

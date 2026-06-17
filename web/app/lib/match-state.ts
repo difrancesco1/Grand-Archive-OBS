@@ -41,7 +41,8 @@ export type MatchActions = {
   setCardDuration: (seconds: number) => void;
   showCard: (card: { name: string; image: string | null }) => void;
   clearCard: () => void;
-  nextMatch: () => void;
+  nextGame: () => void;
+  resetAll: () => void;
 };
 
 const API_BASE_URL =
@@ -119,7 +120,8 @@ export function useMatchState(): {
     setCardDuration: (seconds) => send("set_card_duration", { seconds }),
     showCard: (card) => send("show_card", { card }),
     clearCard: () => send("clear_card"),
-    nextMatch: () => send("next_match"),
+    nextGame: () => send("next_game"),
+    resetAll: () => send("reset_all"),
   };
 
   return { state, connected, actions };

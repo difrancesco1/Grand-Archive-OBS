@@ -169,10 +169,20 @@ class MatchStore:
     def _action_clear_card(self, payload: dict[str, Any]) -> None:
         self.popup_card = None
 
-    def _action_next_match(self, payload: dict[str, Any]) -> None:
-        # Keep names, wins, and champions; reset life and clear any popup.
+    def _action_next_game(self, payload: dict[str, Any]) -> None:
+        # Keep names and wins; reset life counter, clear champions and any popup.
         for player in self.players.values():
             player.damage = 0
+            player.champion = None
+        self.popup_card = None
+
+    def _action_reset_all(self, payload: dict[str, Any]) -> None:
+        # Hard reset: restore the entire match to its initial state.
+        self.players = {
+            "1": PlayerState(name="Player 1"),
+            "2": PlayerState(name="Player 2"),
+        }
+        self.card_display_seconds = DEFAULT_CARD_DISPLAY_SECONDS
         self.popup_card = None
 
     def _schedule_popup_clear(self) -> None:

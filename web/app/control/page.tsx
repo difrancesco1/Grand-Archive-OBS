@@ -18,7 +18,7 @@ export default function ControlPage() {
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
         <header className="flex items-center justify-between">
           <h1 className="text-xl font-bold text-[#CAB378]">
-            Grand Archive Controller
+            Overlay Controller
           </h1>
           <span
             className={`flex items-center gap-2 text-xs ${
@@ -82,22 +82,42 @@ export default function ControlPage() {
               </div>
             </section>
 
-            <section className="flex items-center justify-between rounded-xl bg-[#1E1E1E] border border-[#3A3A3A] p-5">
-              <div>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-[#CAB378]">
-                  Match
-                </h2>
-                <p className="text-xs text-zinc-400">
-                  Resets life for both players. Keeps names, wins, and champions.
-                </p>
+            <section className="flex flex-col gap-4 rounded-xl bg-[#1E1E1E] border border-[#3A3A3A] p-5">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-sm font-semibold uppercase tracking-wide text-[#CAB378]">
+                    Next game
+                  </h2>
+                  <p className="text-xs text-zinc-400">
+                    Resets life and clears champions for both players. Keeps names and wins.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => actions.nextGame()}
+                  className="rounded-lg bg-[#CAB378] px-5 py-2 text-sm font-semibold text-black hover:bg-[#d8c592]"
+                >
+                  Next game
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => actions.nextMatch()}
-                className="rounded-lg bg-[#CAB378] px-5 py-2 text-sm font-semibold text-black hover:bg-[#d8c592]"
-              >
-                Next match
-              </button>
+
+              <div className="flex items-center justify-between gap-4 border-t border-[#3A3A3A] pt-4">
+                <div>
+                  <h2 className="text-sm font-semibold uppercase tracking-wide text-red-400">
+                    Reset all
+                  </h2>
+                  <p className="text-xs text-zinc-400">
+                    Hard reset: clears names, wins, champions, life, and card display duration.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => actions.resetAll()}
+                  className="rounded-lg bg-[#7A2E2E] px-5 py-2 text-sm font-semibold text-white hover:bg-[#933737]"
+                >
+                  Reset all
+                </button>
+              </div>
             </section>
           </>
         )}
