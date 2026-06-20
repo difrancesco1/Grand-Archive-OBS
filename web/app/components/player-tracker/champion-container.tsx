@@ -10,7 +10,7 @@ type ChampionContainerProps = {
 export default function ChampionContainer({ image, name }: ChampionContainerProps) {
 
   return (
-    <div className="w-35 h-25 rounded-3xl overflow-hidden relative z-10 border-4 border-[#BB8D8B]">
+    <div className="w-45 h-35 rounded-3xl overflow-hidden relative z-10 border-4 border-[#BB8D8B]">
       <Image
         src={image || "/Diana.jpg"}
         alt={name || "Champion"}
