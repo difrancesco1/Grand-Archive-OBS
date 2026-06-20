@@ -52,7 +52,7 @@ export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTr
 
   return (
     <div
-      className={`w-58 h-14 bg-black/40 absolute bottom-5 leading-tight flex items-center gap-2 z-8 pt-3 ${
+      className={`w-58 h-14 bg-black/60 absolute bottom-5 leading-tight flex items-center gap-2 z-8 pt-3 ${
         isRight
           ? "rounded-l-2xl right-[-14] pr-5 pl-3 flex-row-reverse"
           : "rounded-r-2xl left-[-14] pl-5 pr-3"
