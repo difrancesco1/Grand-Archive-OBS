@@ -15,6 +15,12 @@ type FlashSegment = {
 
 const FLASH_DURATION_MS = 900;
 
+function fillColor(percent: number) {
+  if (percent > 50) return "#8DBF9A";
+  if (percent > 25) return "#D9B66A";
+  return "#C97A6B";
+}
+
 export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
   const currentHealth = Math.max(0, maxHealth - damage);
   const healthPercent =
@@ -49,10 +55,10 @@ export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
   }, [damage, maxHealth]);
 
   return (
-    <div className="relative w-full flex-1 min-h-0 bg-[#2C0000] overflow-hidden border-3 border-[var(--accent)]">
+    <div className="relative w-full flex-1 min-h-0 bg-[var(--surface)] overflow-hidden border-3 border-[var(--accent)]">
       <div
-        className="absolute inset-x-0 bottom-0 bg-green-500 transition-[height] duration-300 ease-out z-0"
-        style={{ height: `${healthPercent}%` }}
+        className="absolute inset-x-0 bottom-0 transition-[height,background-color] duration-300 ease-out z-0"
+        style={{ height: `${healthPercent}%`, backgroundColor: fillColor(healthPercent) }}
       />
       {flashes.map((flash) => (
         <div
@@ -69,13 +75,13 @@ export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
         <div
           className="absolute inset-0 pointer-events-none z-[5]"
           style={{
-            backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.25) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.12) 1px, transparent 1px)",
             backgroundSize: `100% ${100 / maxHealth}%`,
             backgroundPosition: "bottom",
           }}
         />
       )}
-      <div className="absolute inset-x-0 top-3 z-20 flex flex-col items-center text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+      <div className="absolute inset-x-0 top-3 z-20 flex flex-col items-center text-[var(--text)]">
         <span className="text-6xl font-bold tabular-nums leading-none">{currentHealth}</span>
         <span className="text-sm font-bold tabular-nums mt-1">/ {maxHealth}</span>
       </div>

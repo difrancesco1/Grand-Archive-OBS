@@ -12,10 +12,10 @@ export default function Home() {
       {state && (
         <>
           <div className="fixed left-0 z-50 h-full bg-[#EEEEE8] w-1/8">
-            <PlayerDisplay player={state.players["1"]} side="left" />
+            <PlayerDisplay player={state.players["1"]} opponentWins={state.players["2"].wins} />
           </div>
           <div className="fixed right-0 z-50 h-full bg-[#EEEEE8] w-1/8">
-            <PlayerDisplay player={state.players["2"]} side="right" />
+            <PlayerDisplay player={state.players["2"]} opponentWins={state.players["1"].wins} />
           </div>
           <CardPopup card={state.popup_card} />
         </>
