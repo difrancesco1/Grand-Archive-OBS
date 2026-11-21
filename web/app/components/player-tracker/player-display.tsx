@@ -10,7 +10,7 @@ const DEFAULT_MAX_HEALTH = 15;
 
 const SPIRIT_BACKGROUNDS: Record<Spirit, string> = {
   fire: "linear-gradient(to bottom, #100B09 0%, #2B1610 25%, #391D12 45%, #9B663D 75%, #DAB565 100%)",
-  water: "url(/spirits/water.jpg) center / cover no-repeat",
+  water: "url(/spirits/water-bg.jpg) center / cover no-repeat",
   wind: "url(/spirits/wind-bg.jpg) center / cover no-repeat",
 };
 
