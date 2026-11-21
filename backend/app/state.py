@@ -168,6 +168,13 @@ class MatchStore:
             return
         player.profile = None
 
+    def _action_set_spirit(self, payload: dict[str, Any]) -> None:
+        player = self._player(payload.get("player"))
+        if player is None:
+            return
+        spirit = payload.get("spirit")
+        player.spirit = spirit if spirit in ("fire", "water", "wind") else None
+
     def _action_set_card_duration(self, payload: dict[str, Any]) -> None:
         try:
             seconds = float(payload.get("seconds", self.card_display_seconds))

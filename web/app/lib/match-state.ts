@@ -25,12 +25,15 @@ export type PlayerProfile = {
   country: string | null;
 };
 
+export type Spirit = "fire" | "water" | "wind";
+
 export type PlayerState = {
   name: string;
   wins: number;
   damage: number;
   champion: Champion | null;
   profile: PlayerProfile | null;
+  spirit: Spirit | null;
 };
 
 export type MatchSnapshot = {
@@ -49,6 +52,7 @@ export type MatchActions = {
   setChampion: (player: PlayerId, champion: Champion | null) => void;
   setPlayerProfile: (player: PlayerId, profile: PlayerProfile | null) => void;
   clearPlayerProfile: (player: PlayerId) => void;
+  setSpirit: (player: PlayerId, spirit: Spirit | null) => void;
   setCardDuration: (seconds: number) => void;
   showCard: (card: { name: string; image: string | null }) => void;
   clearCard: () => void;
@@ -131,6 +135,7 @@ export function useMatchState(): {
     setPlayerProfile: (player, profile) =>
       send("set_player_profile", { player, profile }),
     clearPlayerProfile: (player) => send("clear_player_profile", { player }),
+    setSpirit: (player, spirit) => send("set_spirit", { player, spirit }),
     setCardDuration: (seconds) => send("set_card_duration", { seconds }),
     showCard: (card) => send("show_card", { card }),
     clearCard: () => send("clear_card"),

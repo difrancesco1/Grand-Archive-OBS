@@ -1,4 +1,8 @@
+from typing import Literal
+
 from pydantic import BaseModel
+
+Spirit = Literal["fire", "water", "wind"]
 
 
 class Champion(BaseModel):
@@ -28,6 +32,7 @@ class PlayerState(BaseModel):
     damage: int = 0
     champion: Champion | None = None
     profile: PlayerProfile | None = None
+    spirit: Spirit | None = None
 
 
 class MatchSnapshot(BaseModel):

@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { MatchActions, PlayerId, PlayerState } from "../../lib/match-state";
+import { MatchActions, PlayerId, PlayerState, Spirit } from "../../lib/match-state";
 import ChampionSearch from "../player-tracker/champion-search";
 import PlayerSearch from "../player-tracker/player-search";
 
 const DEFAULT_MAX_HEALTH = 30;
 const MAX_WINS = 2;
+const SPIRITS: { id: Spirit; label: string }[] = [
+  { id: "fire", label: "Fire" },
+  { id: "water", label: "Water" },
+  { id: "wind", label: "Wind" },
+];
 
 type PlayerControlPanelProps = {
   playerId: PlayerId;
@@ -132,6 +137,26 @@ export default function PlayerControlPanel({
             </button>
           </div>
         )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <span className="text-xs text-zinc-400">Spirit (kept for the match)</span>
+        <div className="flex gap-2">
+          {SPIRITS.map(({ id, label }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => actions.setSpirit(playerId, player.spirit === id ? null : id)}
+              className={`flex-1 rounded-lg py-2 text-sm ${
+                player.spirit === id
+                  ? "bg-[#CAB378] font-semibold text-black"
+                  : "bg-[#3A3A3A] text-white hover:bg-[#4A4A4A]"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">

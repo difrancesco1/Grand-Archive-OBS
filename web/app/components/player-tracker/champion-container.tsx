@@ -20,7 +20,7 @@ export default function ChampionContainer({ image, name }: ChampionContainerProp
           priority
         />
       </div>
-      <div className="w-full text-center border-3 border-t-0 border-[var(--accent)] py-1 px-1">
+      <div className="w-full text-center border-3 border-t-0 border-[var(--accent)] bg-[var(--surface)] py-1 px-1">
         <span className="text-[var(--text)] text-md font-bold leading-tight">{name || "Champion Name"}</span>
       </div>
     </div>
