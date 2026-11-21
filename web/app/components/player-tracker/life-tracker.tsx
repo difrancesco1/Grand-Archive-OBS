@@ -14,12 +14,7 @@ type FlashSegment = {
 };
 
 const FLASH_DURATION_MS = 900;
-
-function fillColor(percent: number) {
-  if (percent > 50) return "#8DBF9A";
-  if (percent > 25) return "#D9B66A";
-  return "#C97A6B";
-}
+const LIFE_COLOR = "#8DBF9A";
 
 export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
   const currentHealth = Math.max(0, maxHealth - damage);
@@ -57,8 +52,8 @@ export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
   return (
     <div className="relative w-full flex-1 min-h-0 bg-[var(--surface)] overflow-hidden border-3 border-[var(--accent)]">
       <div
-        className="absolute inset-x-0 bottom-0 transition-[height,background-color] duration-300 ease-out z-0"
-        style={{ height: `${healthPercent}%`, backgroundColor: fillColor(healthPercent) }}
+        className="absolute inset-x-0 bottom-0 transition-[height] duration-300 ease-out z-0"
+        style={{ height: `${healthPercent}%`, backgroundColor: LIFE_COLOR }}
       />
       {flashes.map((flash) => (
         <div
