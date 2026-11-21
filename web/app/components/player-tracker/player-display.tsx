@@ -9,7 +9,9 @@ import PlayerBanner from "./player-banner";
 
 const DEFAULT_MAX_HEALTH = 15;
 
-const SPIRIT_BACKGROUNDS: Partial<Record<Spirit, string>> = {
+const SPIRIT_BACKGROUNDS: Record<Spirit, string> = {
+  fire: "/spirits/fire.png",
+  water: "/spirits/water.jpg",
   wind: "/spirits/wind-bg.jpg",
 };
 
