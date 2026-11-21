@@ -17,11 +17,20 @@ export type PopupCard = {
   token: string;
 };
 
+export type PlayerProfile = {
+  omni_id: number;
+  username: string;
+  avatar_image: string | null;
+  avatar_frame: string | null;
+  country: string | null;
+};
+
 export type PlayerState = {
   name: string;
   wins: number;
   damage: number;
   champion: Champion | null;
+  profile: PlayerProfile | null;
 };
 
 export type MatchSnapshot = {
@@ -38,6 +47,8 @@ export type MatchActions = {
   removeDamage: (player: PlayerId) => void;
   setDamage: (player: PlayerId, damage: number) => void;
   setChampion: (player: PlayerId, champion: Champion | null) => void;
+  setPlayerProfile: (player: PlayerId, profile: PlayerProfile | null) => void;
+  clearPlayerProfile: (player: PlayerId) => void;
   setCardDuration: (seconds: number) => void;
   showCard: (card: { name: string; image: string | null }) => void;
   clearCard: () => void;
@@ -117,6 +128,9 @@ export function useMatchState(): {
     removeDamage: (player) => send("remove_damage", { player }),
     setDamage: (player, damage) => send("set_damage", { player, damage }),
     setChampion: (player, champion) => send("set_champion", { player, champion }),
+    setPlayerProfile: (player, profile) =>
+      send("set_player_profile", { player, profile }),
+    clearPlayerProfile: (player) => send("clear_player_profile", { player }),
     setCardDuration: (seconds) => send("set_card_duration", { seconds }),
     showCard: (card) => send("show_card", { card }),
     clearCard: () => send("clear_card"),

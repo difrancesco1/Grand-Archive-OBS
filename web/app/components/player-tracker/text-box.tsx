@@ -4,12 +4,14 @@ type TextBoxProps = {
   side?: "left" | "right";
   championName?: string;
   playerName?: string;
+  omniId?: number | null;
 };
 
 export default function TextBox({
   side = "left",
   championName = "Select a champion",
   playerName = "Player",
+  omniId,
 }: TextBoxProps) {
   const isRight = side === "right";
 
@@ -22,7 +24,12 @@ export default function TextBox({
       }`}
     >
       <p className="text-lg text-[#CAB378]">{championName}</p>
-      <p className="text-lg font-bold">{playerName}</p>
+      <p className="text-lg font-bold">
+        {playerName}
+        {omniId != null && (
+          <span className="ml-2 text-xs font-normal text-zinc-400">#{omniId}</span>
+        )}
+      </p>
     </div>
   );
 }

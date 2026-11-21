@@ -3,6 +3,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bg: #EEEEE8;
+  --surface: #F5F5EF;
+  --panel: #131415;
+  --ink: #111111;
+  --text: #4A4948;
+  --muted: #8D877E;
+  --border:#CAC9C2;
+  --accent:#C9A75F;
+  --accent-soft:#D1B27E;
+  --on-panel:#EEEEE8;
 }
 
 @theme inline {

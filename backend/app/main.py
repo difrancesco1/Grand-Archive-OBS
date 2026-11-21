@@ -3,17 +3,19 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.clients import gatcg
+from app.clients import gatcg, omnidex
 from app.config import get_settings
-from app.routers import cards, champions, state
+from app.routers import cards, champions, players, state
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await gatcg.startup()
+    await omnidex.startup()
     try:
         yield
     finally:
+        await omnidex.shutdown()
         await gatcg.shutdown()
 
 
@@ -36,6 +38,7 @@ app.add_middleware(
 
 app.include_router(champions.router)
 app.include_router(cards.router)
+app.include_router(players.router)
 app.include_router(state.router)
 
 

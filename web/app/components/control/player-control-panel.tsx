@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { MatchActions, PlayerId, PlayerState } from "../../lib/match-state";
 import ChampionSearch from "../player-tracker/champion-search";
+import PlayerSearch from "../player-tracker/player-search";
 
 const DEFAULT_MAX_HEALTH = 30;
 const MAX_WINS = 2;
@@ -12,15 +13,18 @@ type PlayerControlPanelProps = {
   playerId: PlayerId;
   player: PlayerState;
   actions: MatchActions;
+  eventId: string;
 };
 
 export default function PlayerControlPanel({
   playerId,
   player,
   actions,
+  eventId,
 }: PlayerControlPanelProps) {
   const [name, setName] = useState(player.name);
   const champion = player.champion;
+  const profile = player.profile;
   const maxHealth = champion?.life ?? DEFAULT_MAX_HEALTH;
   const currentHealth = Math.max(0, maxHealth - player.damage);
 
@@ -30,6 +34,55 @@ export default function PlayerControlPanel({
       <h2 className="text-sm font-semibold uppercase tracking-wide text-[#CAB378]">
         Player {playerId}
       </h2>
+
+      <div className="flex flex-col gap-2">
+        <span className="text-xs text-zinc-400">GA Player</span>
+        <PlayerSearch
+          eventId={eventId}
+          onSelect={(selected) => {
+            setName(selected.username);
+            actions.setPlayerProfile(playerId, selected);
+          }}
+        />
+        {profile && (
+          <div className="flex items-center gap-3 rounded-lg bg-[#2C2C2C] px-3 py-2">
+            <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-black/30">
+              {profile.avatar_image && (
+                <Image
+                  src={profile.avatar_image}
+                  alt={profile.username}
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              )}
+              {profile.avatar_frame && (
+                <Image
+                  src={profile.avatar_frame}
+                  alt=""
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              )}
+            </span>
+            <div className="flex-1">
+              <p className="text-sm text-white">{profile.username}</p>
+              <p className="text-xs text-zinc-400">
+                #{profile.omni_id}
+                {profile.country ? ` · ${profile.country}` : ""}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => actions.clearPlayerProfile(playerId)}
+              className="text-xs text-red-400 hover:text-red-300"
+            >
+              Clear
+            </button>
+          </div>
+        )}
+      </div>
 
       
       <div className="flex flex-col gap-2">

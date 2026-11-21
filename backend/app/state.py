@@ -7,6 +7,7 @@ from fastapi import WebSocket
 from app.schemas.state import (
     Champion,
     MatchSnapshot,
+    PlayerProfile,
     PlayerState,
     PopupCard,
 )
@@ -147,6 +148,25 @@ class MatchStore:
             return
         player.champion = None
         player.damage = 0
+
+    def _action_set_player_profile(self, payload: dict[str, Any]) -> None:
+        player = self._player(payload.get("player"))
+        if player is None:
+            return
+        profile = payload.get("profile")
+        if profile is None:
+            player.profile = None
+            return
+        player.profile = PlayerProfile.model_validate(profile)
+        # Mirror the GA username onto the display name (still operator-editable).
+        if player.profile.username:
+            player.name = player.profile.username
+
+    def _action_clear_player_profile(self, payload: dict[str, Any]) -> None:
+        player = self._player(payload.get("player"))
+        if player is None:
+            return
+        player.profile = None
 
     def _action_set_card_duration(self, payload: dict[str, Any]) -> None:
         try:

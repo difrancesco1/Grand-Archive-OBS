@@ -52,13 +52,9 @@ export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTr
 
   return (
     <div
-      className={`w-58 h-14 bg-black/60 absolute bottom-5 leading-tight flex items-center gap-2 z-8 pt-3 ${
-        isRight
-          ? "rounded-l-2xl right-[-14] pr-5 pl-3 flex-row-reverse"
-          : "rounded-r-2xl left-[-14] pl-5 pr-3"
-      }`}
+      className={`w-45 mt-2 leading-tight flex items-center z-8`}
     >
-      <div className="relative flex-1 h-6 bg-[#2C0000] rounded-md overflow-hidden">
+      <div className="relative w-full h-5 bg-[#2C0000] rounded-md overflow-hidden border border-[var(--text)]">
         <div
           className={`absolute inset-y-0 bg-green-500 transition-[width] duration-300 ease-out z-0 ${
             isRight ? "right-0" : "left-0"
@@ -77,12 +73,8 @@ export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTr
           />
         ))}
       </div>
-      <span
-        className={`text-white text-sm font-bold tabular-nums min-w-[2.5rem] ${
-          isRight ? "text-left" : "text-right"
-        }`}
-      >
-        {currentHealth}/{maxHealth}
+      <span className="text-white text-sm font-bold tabular-nums min-w-[1rem] text-right">
+        {damage}
       </span>
     </div>
   );

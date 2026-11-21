@@ -14,11 +14,20 @@ class PopupCard(BaseModel):
     token: str
 
 
+class PlayerProfile(BaseModel):
+    omni_id: int
+    username: str
+    avatar_image: str | None = None
+    avatar_frame: str | None = None
+    country: str | None = None
+
+
 class PlayerState(BaseModel):
     name: str
     wins: int = 0
     damage: int = 0
     champion: Champion | None = None
+    profile: PlayerProfile | None = None
 
 
 class MatchSnapshot(BaseModel):

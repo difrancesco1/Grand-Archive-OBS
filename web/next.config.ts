@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "api.gatcg.com",
         pathname: "/cards/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "accounts.gatcg.com",
+        pathname: "/images/avatars/**",
+      },
     ],
   },
 };

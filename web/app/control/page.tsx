@@ -5,13 +5,25 @@ import CardQuickSearch from "../components/control/card-quick-search";
 import PlayerControlPanel from "../components/control/player-control-panel";
 import { useMatchState } from "../lib/match-state";
 
+const EVENT_ID_STORAGE_KEY = "ga-obs-event-id";
+
 export default function ControlPage() {
   const { state, connected, actions } = useMatchState();
   const [duration, setDuration] = useState("8");
+  const [eventId, setEventId] = useState("");
 
   useEffect(() => {
     if (state) setDuration(String(state.card_display_seconds));
   }, [state?.card_display_seconds]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(EVENT_ID_STORAGE_KEY);
+    if (stored) setEventId(stored);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(EVENT_ID_STORAGE_KEY, eventId);
+  }, [eventId]);
 
   return (
     <main className="min-h-screen bg-[#121212] text-white p-6">
@@ -38,16 +50,35 @@ export default function ControlPage() {
           <p className="text-sm text-zinc-400">Connecting to match server...</p>
         ) : (
           <>
+            <section className="flex flex-col gap-2 rounded-xl bg-[#1E1E1E] border border-[#3A3A3A] p-5">
+              <label className="flex flex-col gap-1 text-xs text-zinc-400">
+                Omnidex Event ID
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={eventId}
+                  onChange={(e) => setEventId(e.target.value)}
+                  placeholder="e.g. 1234"
+                  className="w-48 rounded-lg bg-[#2C2C2C] text-white text-sm px-3 py-2 border border-[#4C4C4C] outline-none focus:border-[#CAB378]"
+                />
+              </label>
+              <p className="text-xs text-zinc-500">
+                Player search looks up registrants of this event by username or Omni number.
+              </p>
+            </section>
+
             <div className="grid gap-6 md:grid-cols-2">
               <PlayerControlPanel
                 playerId="1"
                 player={state.players["1"]}
                 actions={actions}
+                eventId={eventId}
               />
               <PlayerControlPanel
                 playerId="2"
                 player={state.players["2"]}
                 actions={actions}
+                eventId={eventId}
               />
             </div>
 

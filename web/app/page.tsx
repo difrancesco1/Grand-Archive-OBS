@@ -8,13 +8,13 @@ export default function Home() {
   const { state } = useMatchState();
 
   return (
-    <div className="relative min-h-screen bg-transparent font-sans">
+    <div className="min-h-screen bg-transparent font-sans">
       {state && (
         <>
-          <div className="fixed top-4 left-4 z-50">
+          <div className="fixed left-0 z-50 h-full bg-[#EEEEE8] w-1/8">
             <PlayerDisplay player={state.players["1"]} side="left" />
           </div>
-          <div className="fixed top-4 right-4 z-50">
+          <div className="fixed right-0 z-50 h-full bg-[#EEEEE8] w-1/8">
             <PlayerDisplay player={state.players["2"]} side="right" />
           </div>
           <CardPopup card={state.popup_card} />

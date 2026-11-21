@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     ga_api_base: str = "https://api.gatcg.com"
     ga_image_base: str = "https://api.gatcg.com"
+    ga_omni_base: str = "https://omni.gatcg.com"
+    ga_accounts_base: str = "https://accounts.gatcg.com"
     cors_origins: Annotated[list[str], NoDecode] = ["http://localhost:3000"]
     request_timeout_seconds: float = 10.0
 

@@ -23,6 +23,18 @@ export type ChampionDetail = {
   element: string | null;
 };
 
+export type PlayerSearchResult = {
+  id: number;
+  username: string;
+  country: string | null;
+};
+
+export type PlayerAvatar = {
+  image: string | null;
+  frame: string | null;
+  rarity: number | null;
+};
+
 export async function searchChampions(
   query: string,
   signal?: AbortSignal
@@ -63,4 +75,35 @@ export async function getChampion(
     throw new Error(`Failed to load champion '${slug}' (${res.status})`);
   }
   return (await res.json()) as ChampionDetail;
+}
+
+export async function searchPlayers(
+  eventId: string,
+  query: string,
+  signal?: AbortSignal
+): Promise<PlayerSearchResult[]> {
+  const trimmedEvent = eventId.trim();
+  const trimmedQuery = query.trim();
+  if (!trimmedEvent || !trimmedQuery) return [];
+
+  const url = `${API_BASE_URL}/api/players/search?event_id=${encodeURIComponent(
+    trimmedEvent
+  )}&q=${encodeURIComponent(trimmedQuery)}`;
+  const res = await fetch(url, { signal });
+  if (!res.ok) {
+    throw new Error(`Player search failed (${res.status})`);
+  }
+  return (await res.json()) as PlayerSearchResult[];
+}
+
+export async function getPlayerAvatar(
+  id: number,
+  signal?: AbortSignal
+): Promise<PlayerAvatar> {
+  const url = `${API_BASE_URL}/api/players/${encodeURIComponent(id)}/avatar`;
+  const res = await fetch(url, { signal });
+  if (!res.ok) {
+    throw new Error(`Failed to load avatar for player '${id}' (${res.status})`);
+  }
+  return (await res.json()) as PlayerAvatar;
 }
