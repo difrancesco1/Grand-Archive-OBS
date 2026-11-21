@@ -1,16 +1,26 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardQuickSearch from "../components/control/card-quick-search";
 import PlayerControlPanel from "../components/control/player-control-panel";
 import { useMatchState } from "../lib/match-state";
 
 const EVENT_ID_STORAGE_KEY = "ga-obs-event-id";
 
+const MATTHEW_CRUZ_IMAGES = [1, 2, 3, 4, 5].map((n) => `/matthew-cruz/${n}.jpg`);
+
 export default function ControlPage() {
   const { state, connected, actions } = useMatchState();
   const [duration, setDuration] = useState("8");
   const [eventId, setEventId] = useState("");
+  const lastMatthewImage = useRef<string | null>(null);
+
+  const showRandomMatthew = () => {
+    const choices = MATTHEW_CRUZ_IMAGES.filter((img) => img !== lastMatthewImage.current);
+    const image = choices[Math.floor(Math.random() * choices.length)];
+    lastMatthewImage.current = image;
+    actions.showCard({ name: "Matthew Cruz", image });
+  };
 
   useEffect(() => {
     if (state) setDuration(String(state.card_display_seconds));
@@ -103,6 +113,13 @@ export default function ControlPage() {
                     className="w-32 rounded-lg bg-[#2C2C2C] text-white text-sm px-3 py-2 border border-[#4C4C4C] outline-none focus:border-[#CAB378]"
                   />
                 </label>
+                <button
+                  type="button"
+                  onClick={showRandomMatthew}
+                  className="rounded-lg bg-[#CAB378] px-4 py-2 text-sm font-semibold text-black hover:bg-[#d8c592]"
+                >
+                  Matthew Cruz
+                </button>
                 <button
                   type="button"
                   onClick={() => actions.clearCard()}
