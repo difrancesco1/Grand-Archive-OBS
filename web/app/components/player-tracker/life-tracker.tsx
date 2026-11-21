@@ -5,19 +5,17 @@ import { useEffect, useRef, useState } from "react";
 type LifeTrackerProps = {
   damage: number;
   maxHealth: number;
-  side?: "left" | "right";
 };
 
 type FlashSegment = {
   id: number;
-  leftPct: number;
-  widthPct: number;
+  bottomPct: number;
+  heightPct: number;
 };
 
 const FLASH_DURATION_MS = 900;
 
-export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTrackerProps) {
-  const isRight = side === "right";
+export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
   const currentHealth = Math.max(0, maxHealth - damage);
   const healthPercent =
     maxHealth > 0 ? Math.min(100, (currentHealth / maxHealth) * 100) : 0;
@@ -32,13 +30,13 @@ export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTr
 
     if (damage <= prev || maxHealth <= 0) return;
 
-    const rightPct = ((maxHealth - prev) / maxHealth) * 100;
-    const leftPct = ((maxHealth - damage) / maxHealth) * 100;
+    const topPct = (Math.max(0, maxHealth - prev) / maxHealth) * 100;
+    const bottomPct = (Math.max(0, maxHealth - damage) / maxHealth) * 100;
     const id = ++flashIdRef.current;
     const segment: FlashSegment = {
       id,
-      leftPct,
-      widthPct: rightPct - leftPct,
+      bottomPct,
+      heightPct: topPct - bottomPct,
     };
 
     setFlashes((current) => [...current, segment]);
@@ -51,31 +49,36 @@ export default function LifeTracker({ damage, maxHealth, side = "left" }: LifeTr
   }, [damage, maxHealth]);
 
   return (
-    <div
-      className={`w-45 mt-2 leading-tight flex items-center z-8`}
-    >
-      <div className="relative w-full h-5 bg-[#2C0000] rounded-md overflow-hidden border border-[var(--text)]">
+    <div className="relative w-full flex-1 min-h-0 bg-[#2C0000] overflow-hidden border-3 border-[var(--accent)]">
+      <div
+        className="absolute inset-x-0 bottom-0 bg-green-500 transition-[height] duration-300 ease-out z-0"
+        style={{ height: `${healthPercent}%` }}
+      />
+      {flashes.map((flash) => (
         <div
-          className={`absolute inset-y-0 bg-green-500 transition-[width] duration-300 ease-out z-0 ${
-            isRight ? "right-0" : "left-0"
-          }`}
-          style={{ width: `${healthPercent}%` }}
+          key={flash.id}
+          className="absolute inset-x-0 pointer-events-none z-10"
+          style={{
+            bottom: `${flash.bottomPct}%`,
+            height: `${flash.heightPct}%`,
+            animation: `damage-flash ${FLASH_DURATION_MS}ms ease-out forwards`,
+          }}
         />
-        {flashes.map((flash) => (
-          <div
-            key={flash.id}
-            className="absolute inset-y-0 pointer-events-none z-10"
-            style={{
-              [isRight ? "right" : "left"]: `${flash.leftPct}%`,
-              width: `${flash.widthPct}%`,
-              animation: `damage-flash ${FLASH_DURATION_MS}ms ease-out forwards`,
-            }}
-          />
-        ))}
+      ))}
+      {maxHealth > 0 && (
+        <div
+          className="absolute inset-0 pointer-events-none z-[5]"
+          style={{
+            backgroundImage: "linear-gradient(to top, rgba(0,0,0,0.25) 1px, transparent 1px)",
+            backgroundSize: `100% ${100 / maxHealth}%`,
+            backgroundPosition: "bottom",
+          }}
+        />
+      )}
+      <div className="absolute inset-x-0 top-3 z-20 flex flex-col items-center text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+        <span className="text-6xl font-bold tabular-nums leading-none">{currentHealth}</span>
+        <span className="text-sm font-bold tabular-nums mt-1">/ {maxHealth}</span>
       </div>
-      <span className="text-white text-sm font-bold tabular-nums min-w-[1rem] text-right">
-        {damage}
-      </span>
     </div>
   );
 }
