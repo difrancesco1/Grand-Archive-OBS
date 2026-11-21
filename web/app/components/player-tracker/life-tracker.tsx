@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 type LifeTrackerProps = {
   damage: number;
@@ -77,7 +78,10 @@ export default function LifeTracker({ damage, maxHealth }: LifeTrackerProps) {
         />
       )}
       <div className="absolute inset-x-0 top-3 z-20 flex flex-col items-center text-[var(--text)]">
-        <span className="text-6xl font-bold tabular-nums leading-none">{currentHealth}</span>
+        <div className="flex items-center gap-1">
+          <FavoriteIcon sx={{ fontSize: 36, color: "currentColor" }} />
+          <span className="text-6xl font-bold tabular-nums leading-none">{currentHealth}</span>
+        </div>
         <span className="text-sm font-bold tabular-nums mt-1">/ {maxHealth}</span>
       </div>
     </div>
