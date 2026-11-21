@@ -38,19 +38,19 @@ export default function CardPopup({ card }: CardPopupProps) {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 transition-all ease-out"
+      className="fixed bottom-4 right-[calc(12.5%+1rem)] z-40 transition-all ease-out"
       style={{
         transitionDuration: `${FADE_MS}ms`,
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(12px)",
       }}
     >
-      <div className="relative w-72 aspect-[5/7] drop-shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
+      <div className="relative h-[30vh] aspect-[5/7] drop-shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
         <Image
           src={rendered.image}
           alt={rendered.name}
           fill
-          sizes="288px"
+          sizes="240px"
           className="object-contain"
           priority
         />
