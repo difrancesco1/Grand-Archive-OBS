@@ -12,7 +12,7 @@ from app.schemas.state import (
     PopupCard,
 )
 
-DEFAULT_MAX_HEALTH = 30
+DEFAULT_MAX_HEALTH = 15
 MAX_WINS = 2
 DEFAULT_CARD_DISPLAY_SECONDS = 8.0
 PLAYER_IDS = ("1", "2")

@@ -6,7 +6,7 @@ import LifeTracker from "./life-tracker";
 import MatchRecord from "./match-record";
 import PlayerBanner from "./player-banner";
 
-const DEFAULT_MAX_HEALTH = 30;
+const DEFAULT_MAX_HEALTH = 15;
 
 type PlayerDisplayProps = {
   player: PlayerState;

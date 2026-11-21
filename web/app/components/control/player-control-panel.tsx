@@ -6,7 +6,7 @@ import { MatchActions, PlayerId, PlayerState, Spirit } from "../../lib/match-sta
 import ChampionSearch from "../player-tracker/champion-search";
 import PlayerSearch from "../player-tracker/player-search";
 
-const DEFAULT_MAX_HEALTH = 30;
+const DEFAULT_MAX_HEALTH = 15;
 const MAX_WINS = 2;
 const SPIRITS: { id: Spirit; label: string }[] = [
   { id: "fire", label: "Fire" },
